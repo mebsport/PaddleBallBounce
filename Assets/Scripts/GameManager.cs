@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameStartUI;
 
     string GooglePlay_ID = "3641388";
-    bool TestMode = true;
+    bool TestMode = false;
 
     private void Awake()
     {
