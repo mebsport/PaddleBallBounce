@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -12,18 +14,19 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public GameObject gameStartUI;
 
+    string GooglePlay_ID = "3641388";
+    bool TestMode = true;
+
     private void Awake()
     {
         instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        Advertisement.Initialize(GooglePlay_ID, TestMode);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -31,9 +34,18 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("Game");
-    }
+        float randomNumber = Random.Range(0, 100);
 
+        if (randomNumber < 34)
+        {
+            DisplayInterstitialAD();
+            SceneManager.LoadScene("Game");
+        }
+        else
+        {
+            SceneManager.LoadScene("Game");
+        }
+    }
     public void ScoreUp()
     {
         score++;
@@ -44,5 +56,10 @@ public class GameManager : MonoBehaviour
     {
         gameStartUI.SetActive(false);
         scoreText.gameObject.SetActive(true);
+    }
+
+    private void DisplayInterstitialAD()
+    {
+        Advertisement.Show();
     }
 }
